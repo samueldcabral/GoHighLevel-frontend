@@ -4,7 +4,7 @@ const api = axios.create({
   baseURL: "http://localhost:3003/api",
 });
 
-const getBookings = async (StartDate, EndDate) => {
+const getEvents = async (StartDate, EndDate) => {
   return await api.get("/events", {
     params: {
       StartDate,
@@ -22,15 +22,11 @@ const getSlots = async (Date, Timezone) => {
   });
 };
 
-const createBooking = async (DateTime, Duration) => {
+const createEvent = async (DateTime, Duration) => {
   return await api.post("/events", {
     DateTime,
     Duration,
   });
 };
 
-const jsonPlaceholder = async () => {
-  return await axios.get("https://jsonplaceholder.typicode.com/todos/1");
-};
-
-export { getBookings, getSlots, createBooking, jsonPlaceholder };
+export { getEvents, getSlots, createEvent };

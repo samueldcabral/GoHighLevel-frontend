@@ -19,7 +19,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .slot {
-  border: 1px solid #dbdbdbce;
+  border: 1px solid #cbd5e0;
   border-radius: 4px;
   margin: 10px 5px;
   padding: 7px 40px;
