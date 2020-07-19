@@ -1,26 +1,102 @@
 <template>
-  <div v-if="page === 'CreateEvent'">
-    <app-create v-on:switch-page="handleSwitchPage"></app-create>
-  </div>
-
-  <div v-else>
-    <app-events v-on:switch-page="handleSwitchPage"></app-events>
+  <div>
+    <img alt="Vue logo" class="app_img" src="./../assets/logo.png" />
+    <p class="h2 events_icon" v-on:click="$emit('switch-page')">
+      <b-icon-arrow-left></b-icon-arrow-left>
+    </p>
+    <div id="app" class="d-flex flex-column">
+      <div class="d-flex justify-content-center">
+        <section class="d-flex flex-column align-items-center app_pick">
+          <h5 class="app_title">Pick a Start and End Date</h5>
+          <vc-date-picker
+            v-model="range"
+            v-on:click.native="handleDatePick(dates)"
+            mode="range"
+            is-inline
+            color="green"
+            :first-day-of-week="0"
+            locale="en"
+          />
+          <!-- <vc-date-picker
+            v-model="range"
+            v-on:click.native="handleDatePick(dates)"
+            mode="multiple"
+            is-inline
+            color="green"
+            :available-dates="availableDates"
+            :first-day-of-week="0"
+            locale="en"
+          />-->
+        </section>
+        <section>
+          <h5 class="app_title">
+            All events for those dates are here!
+            <!-- <strong>{{selectedDate}}</strong> -->
+          </h5>
+          <div class="d-flex justify-content-around">
+            <div class="AM">
+              <app-slot
+                v-for="item in amSlots"
+                v-bind:key="item.title"
+                :slotTime="item.title"
+                v-bind:class="{selectedTimezone : selectedSlot === item.title}"
+                v-on:click.native="setSlot(item.title)"
+              ></app-slot>
+            </div>
+            <div class="PM">
+              <app-slot
+                v-for="item in pmSlots"
+                v-bind:key="item.title"
+                :slotTime="item.title"
+                v-bind:class="{selectedTimezone : selectedSlot === item.title}"
+                v-on:click.native="setSlot(item.title)"
+              ></app-slot>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- <div class="app_form">
+        <div>
+          <label for="range-2" v-bind:class="{'text-muted' : !selectedSlot }">
+            How long should your event be?
+            <strong>{{eventCandidateDuration}} min</strong>
+          </label>
+          <b-form-input
+            id="range-2"
+            v-model="eventCandidateDuration"
+            type="range"
+            min="15"
+            max="60"
+            step="5"
+            :disabled="!selectedSlot"
+          ></b-form-input>
+        </div>
+        <b-button variant="outline-success" class="mt-3 app_outline-button" size="lg">Check Events</b-button>
+        <b-button variant="success" class="mt-3 app_button" size="lg">Create Event</b-button>
+      </div>-->
+    </div>
+    <div class="test h4">{{"dates " + dates}}</div>
+    <div class="test h4">{{JSON.stringify(dates)}}</div>
+    <div class="test h4">{{selectedTimezone}}</div>
+    <div class="test h4">{{selectedSlot}}</div>
+    <div class="test h4">{{range}}</div>
   </div>
 </template>
 
 <script>
+import { BIconArrowLeft } from "bootstrap-vue";
 import moment from "moment-timezone";
-import Timezones from "./config/Timezones";
-import AppEvents from "./components/AllEvents";
-import AppCreate from "./components/CreateEvent";
-import { getEvents, getSlots, createEvent } from "./services/api";
+import Timezones from "./../config/Timezones";
+import {
+  getEvents,
+  getSlots,
+  createEvent
+  // jsonPlaceholder
+} from "./../services/api";
 
 export default {
-  name: "App",
-  components: {
-    "app-events": AppEvents,
-    "app-create": AppCreate
-  },
+  name: "AppEvents",
+  components: { "": BIconArrowLeft },
   data() {
     return {
       dates: null,
@@ -31,7 +107,7 @@ export default {
       selectedDate: null,
       selectedTimezone: "UTC",
       options: Timezones,
-      page: "CreateEvent",
+      createEventPage: false,
       eventCandidateDuration: 30,
       amSlots: [],
       pmSlots: [],
@@ -57,9 +133,6 @@ export default {
   methods: {
     setSlot: function(slot) {
       this.selectedSlot = slot;
-    },
-    handleSwitchPage: function() {
-      this.page = this.page === "AllEvents" ? "CreateEvent" : "AllEvents";
     },
     // TODO when clicking here, perform an api check?
     handleDatePick: function() {},
@@ -173,7 +246,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap");
 #app {
   font-family: "Montserrat", sans-serif;
@@ -227,5 +300,16 @@ export default {
 
 .app_form {
   margin: 2rem auto;
+}
+
+.events_icon {
+  position: absolute;
+  top: 0;
+  margin-left: 5px;
+}
+
+.events_icon:hover {
+  color: #38a169;
+  cursor: pointer;
 }
 </style>
