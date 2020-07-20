@@ -1,6 +1,7 @@
 <template>
   <div>
     <img alt="Vue logo" class="app_img" src="./../assets/logo.png" />
+    <img alt="Image of girl selecting a date" class="app_imgBg" src="./../assets/booking.svg" />
     <div id="app" class="d-flex flex-column">
       <div class="d-flex justify-content-center">
         <section class="d-flex flex-column align-items-center app_pick">
@@ -19,7 +20,7 @@
         </section>
         <section>
           <h5 class="app_title">
-            Available Starting times for
+            {{selectedDate ? "Available Starting times for" : "Please Start by selecting a date..."}}
             <strong>{{selectedDate}}</strong>
           </h5>
           <div class="d-flex justify-content-around">
@@ -79,12 +80,6 @@
         >Create Event</b-button>
       </div>
     </div>
-    <div class="test h4">{{"dates " + dates}}</div>
-    <div class="test h4">{{selectedTimezone}}</div>
-    <div class="test h4">{{selectedSlot}}</div>
-    <!-- <div class="h5 m-2" v-for="book in apiEvents" v-bind:key="book.id">{{book.id}}</div>
-    <hr />
-    <div class="h5 m-2" v-for="slot in apiFullEvents" v-bind:key="slot.id">{{slot.id}}</div>-->
   </div>
 </template>
 
@@ -143,23 +138,54 @@ export default {
     handleDatePick: function() {},
     handleSubmit: async function() {
       let DateTime = null;
+
       if (this.pmSlots.length > 0) {
         DateTime = this.pmSlots.find(item => item.title === this.selectedSlot);
-      } else if (this.amSlots.length > 0) {
+      }
+
+      if (!DateTime && this.amSlots.length > 0) {
         DateTime = this.amSlots.find(item => item.title === this.selectedSlot);
       }
-      console.log(`DateTime ==> ${DateTime.value.format()}`);
-      console.log(`eventCandidateDuration ==> ${this.eventCandidateDuration}`);
+
+      let toastMessage = {
+        title: "",
+        message: "",
+        variant: ""
+      };
+
       try {
-        let res = await this.createApiEvent(
+        await this.createApiEvent(
           DateTime.value.format(),
           this.eventCandidateDuration
         );
-        console.log(`res ==> ${res}`);
-        this.setAvailableDatesOnCalendar();
+
+        toastMessage.title = "Success!";
+        toastMessage.message = "Event Created Successfully!";
+        toastMessage.variant = "success";
+
+        this.amSlots = this.amSlots.filter(
+          item => item.title !== this.selectedSlot
+        );
+        this.pmSlots = this.pmSlots.filter(
+          item => item.title !== this.selectedSlot
+        );
+        // this.setAvailableDatesOnCalendar();
       } catch (error) {
-        console.log(`error ==> ${error}`);
+        toastMessage.title = "Oops, Something wrong happened!";
+        toastMessage.message = `Event not created. The error is ${error}`;
+        toastMessage.variant = "danger";
       }
+
+      this.displayToast("b-toaster-bottom-center", toastMessage);
+    },
+    displayToast: function(toaster, toast) {
+      this.$bvToast.toast(`${toast.message}`, {
+        title: toast.title,
+        toaster,
+        solid: true,
+        variant: toast.variant,
+        appendToast: true
+      });
     },
     setAvailableDatesOnCalendar: async function() {
       const Timezone = "UTC";
@@ -256,7 +282,7 @@ export default {
   },
   watch: {
     dates: function(val) {
-      this.selectedDate = moment(val).format("ddd, MMMM Do YYYY");
+      this.selectedDate = val ? moment(val).format("ddd, MMMM Do YYYY") : "";
       this.computeSlots(val, this.selectedTimezone);
     },
     selectedTimezone: function(val) {
@@ -288,6 +314,16 @@ export default {
   z-index: -2;
 }
 
+.app_imgBg {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 650px;
+  margin: 1rem auto;
+  opacity: 0.1555;
+  z-index: -2;
+}
 .app_pick {
   margin-right: 6rem;
 }

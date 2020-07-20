@@ -7,12 +7,12 @@ export default {
   name: "AppSlot",
   props: {
     slotTime: String
-  },
-  methods: {
-    setSlot: function(slot) {
-      alert(slot);
-    }
   }
+  // methods: {
+  //   setSlot: function(slot) {
+  //     alert(slot);
+  //   }
+  // }
 };
 </script>
 
