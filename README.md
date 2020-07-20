@@ -12,20 +12,19 @@
 </p>
 
 <p align="center">
-  This is the frontend assignment for High Level company and It consisted in creating a two-page application using VueJS. If you wanna check the backend, here's the link to the repo.<br>
+  This is the frontend assignment for HighLevel and It consisted in creating a two-page application using VueJS. <br>If you wanna check out the backend, here's the link to the repo.<br>
    <a href="https://github.com/samueldcabral/GoHighLevel-backend">Visit backend</a>
 </p>
 
 ## Index
 
-- [Get Started](#Get-Started)
-- [Screenshots](#Screenshots)
-- [Contribuições](#Contribuições)
-- [Licença](#Licença)
+- [Get Started](#get-started)
+- [Screen Recordings](#screen-recording)
+- [About Me](#about-me)
 
-## Get-started
-
-Copy each command below and paste them in the Terminal to set it up.
+<h2 id="get-started">Get Started</h2>
+Copy each command below and paste them in the Terminal to set it up. <br>
+(For better experience, make sure you have the backend running - check it out <a href="https://github.com/samueldcabral/GoHighLevel-backend">here</a> )
 
 ```bash
 git clone https://github.com/samueldcabral/GoHighLevel-frontend.git
@@ -34,31 +33,19 @@ npm install
 npm run serve
 ```
 
-<h2 id="Screenshots">Screenshots</h2>
+<h2 id="screen-recording">Screen Recordings</h2>
 
-|             Tela Inicial (Usando o exemplo do Diário de Bordo)              |
-| :-------------------------------------------------------------------------: |
-| <img src="https://i.imgur.com/MXoUDia.png" width="700" alt="splash screen"> |
+|       Page #1 - Picking a date, changing timezone and creating an Event!        |
+| :-----------------------------------------------------------------------------: |
+| <img src="https://i.imgur.com/3ovuKdD.gif" width="700" alt="Creating an event"> |
 
-|                 Tela do APOD - Astronomy Picture of the Day                 |
-| :-------------------------------------------------------------------------: |
-| <img src="https://i.imgur.com/iPYWYEw.png" width="700" alt="splash screen"> |
+<br>
 
-|      Tela do Insight - Buscando as informações da superfície de Marte       |
-| :-------------------------------------------------------------------------: |
-| <img src="https://i.imgur.com/3c37IQb.png" width="700" alt="splash screen"> |
+|    Page #2 - Selecting a date range and viewing all events for those dates!    |
+| :----------------------------------------------------------------------------: |
+| <img src="https://i.imgur.com/vVciqdT.gif" width="700" alt="Check all events"> |
 
-|            Tela do cadastramento e visualização do diário (CRUD)            |
-| :-------------------------------------------------------------------------: |
-| <img src="https://i.imgur.com/pFFBXit.png" width="700" alt="splash screen"> |
-
-## Contribuições
-
-Você pode contribuir de várias formas, por exemplo criando novas 'features', retirando bugs, melhorando a documentação e
-exemplos, ou até traduzindo algum documento daqui para outra língua.
-You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
-or translating any document here to your language.
-
-## Licença
-
-[MIT](https://opensource.org/licenses/MIT) - Samuel D Cabral - 2020
+<h2 id="about-me">About me</h2>
+<strong>Samuel Deschamps Cabral</strong>
+<br>
+samueldcabral@gmail.com
